@@ -3,9 +3,10 @@ import { WeatherData } from "../types/WeatherData";
 interface Props {
   data: WeatherData["forecast"]["forecastday"][0];
   unit: "°C" | "°F";
+  windSpeed: "km/h" | "mp/h";
 }
 
-function WeatherCard({ data, unit }: Props) {
+function WeatherCard({ data, unit, windSpeed }: Props) {
   const date = new Date(data.date);
 
   return (
@@ -19,7 +20,11 @@ function WeatherCard({ data, unit }: Props) {
         {unit === "°C" ? data.day.maxtemp_c : data.day.maxtemp_f}
         {unit}
       </div>
-      <div className="wind-speed">{data.day.maxwind_kph} km/h</div>
+      <div className="temperature">
+        {windSpeed === "km/h" ? data.day.maxwind_kph : data.day.maxwind_mph}{" "}
+        {windSpeed}
+      </div>
+      {/* <div className="wind-speed">{data.day.maxwind_kph} km/h</div> */}
       <div className="humidity">{data.day.avghumidity}%</div>
     </div>
   );

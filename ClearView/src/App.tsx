@@ -3,15 +3,16 @@ import type { WeatherData } from "./types/WeatherData";
 import WeatherCard from "./components/WeatherCard";
 // import { Chart } from "chart.js";
 import Chart from "chart.js/auto";
-
+// import temp from "./assets/images/temp.svg";
 import "./App.css";
-import Navbar from "./components/navbar";
+import Navbar from "./components/navbar/navbar";
 
 function App() {
   const [location, setLocation] = useState<GeolocationPosition | null>(null);
   const [coords, setCoords] = useState<GeolocationCoordinates | null>(null);
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [unit, setUnit] = useState<"°C" | "°F">("°C");
+  const [windSpeed, setWindspeed] = useState<"km/h" | "mp/h">("km/h");
 
   const API_KEY = import.meta.env.VITE_REACT_APP_API_KEY;
   useEffect(() => {
@@ -50,7 +51,6 @@ function App() {
         `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${lat},${lon}&days=1`
       );
       const data = await response.json();
-      console.log(response);
       const WeatherData = data.forecast.forecastday[0].hour.map(
         (hour: any) => ({
           time: hour.time_epoch,
@@ -68,9 +68,9 @@ function App() {
       return WeatherData;
     }
   }, [API_KEY, coords, unit]);
-  function updateChart(WeatherData: any, unit: string) {
+  function updateChart(WeatherData: Array<any>, unit: string) {
     const canvas = document.getElementById("myChart") as HTMLCanvasElement;
-
+    console.log(WeatherData);
     const labels = WeatherData.map((hour: { time: number }) => {
       const date = new Date(hour.time * 1000);
       return date.getHours().toString().padStart(2, "0") + ":00";
@@ -82,7 +82,7 @@ function App() {
     const data =
       unit === "°C"
         ? WeatherData.map((hour) => hour.temperature)
-        : WeatherData.map((hour) => hour.temperature); // transform to Fahrenheit
+        : WeatherData.map((hour) => (hour.temperature * 9) / 5 + 32); // transform to Fahrenheit
 
     // const data = [WeatherData.temperature];
     // Check if a chart has already been created for the canvas
@@ -148,22 +148,34 @@ function App() {
           >
             Switch to {unit === "°C" ? "°F" : "°C"}
           </button>
+          <button
+            className="btn btn-secondary"
+            onClick={() => setWindspeed(windSpeed === "km/h" ? "mp/h" : "km/h")}
+          >
+            Switch to {windSpeed === "km/h" ? "mp/h" : "km/h"}
+          </button>
 
           <div className="location">{weather.location.name}</div>
-          <div className=" flex justify-center items-center">
+          <div className="flex justify-center items-center">
             <img src={current.condition.icon} alt={current.condition.text} />
             {current.condition.text}
           </div>
+          {/* <p>{current.uv}</p> */}
           <div className="temperature">
             {unit === "°C" ? current.temp_c : current.temp_f}
-            {unit}
           </div>
-          <div className="wind-speed">{current.wind_kph} km/h</div>
+          {unit}
           <div className="humidity">{current.humidity}%</div>
+          <div className="temperature">
+            {windSpeed === "km/h" ? current.wind_kph : current.wind_mph}{" "}
+            {windSpeed}
+          </div>
+
           <div className="sunrise-sunset">
             <div className="sunrise">{current.sunrise}</div>
-            <div className="sunset">{current.sunset}</div>
+            <p className="sunset">{current.sunset}</p>
           </div>
+          <div>{/* <img src={temp} alt="" srcset="" /> */}</div>
           {/* <div className="unit-switcher">
             <button onClick={() => setUnit("°C")}>°C</button>
             <button onClick={() => setUnit("°F")}>°F</button>
@@ -173,7 +185,12 @@ function App() {
         <h2>3-day forecast</h2>
         <div className="flex justify-center items-center gap-7 mt-3">
           {forecast.map((day) => (
-            <WeatherCard key={day.date} data={day} unit={unit} />
+            <WeatherCard
+              key={day.date}
+              data={day}
+              unit={unit}
+              windSpeed={windSpeed}
+            />
           ))}
         </div>
       </div>
