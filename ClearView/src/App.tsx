@@ -12,7 +12,7 @@ function App() {
   const [coords, setCoords] = useState<GeolocationCoordinates | null>(null);
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [unit, setUnit] = useState<"°C" | "°F">("°C");
-  const [windSpeed, setWindspeed] = useState<"km/h" | "mp/h">("km/h");
+  const [windSpeed, setWindSpeed] = useState<"km/h" | "mp/h">("km/h");
 
   const API_KEY = import.meta.env.VITE_REACT_APP_API_KEY;
   useEffect(() => {
@@ -70,7 +70,6 @@ function App() {
   }, [API_KEY, coords, unit]);
   function updateChart(WeatherData: Array<any>, unit: string) {
     const canvas = document.getElementById("myChart") as HTMLCanvasElement;
-    console.log(WeatherData);
     const labels = WeatherData.map((hour: { time: number }) => {
       const date = new Date(hour.time * 1000);
       return date.getHours().toString().padStart(2, "0") + ":00";
@@ -84,7 +83,6 @@ function App() {
         ? WeatherData.map((hour) => hour.temperature)
         : WeatherData.map((hour) => (hour.temperature * 9) / 5 + 32); // transform to Fahrenheit
 
-    // const data = [WeatherData.temperature];
     // Check if a chart has already been created for the canvas
     const chart = Chart.getChart(canvas);
 
@@ -135,12 +133,11 @@ function App() {
   const forecast = weather.forecast.forecastday;
   const astro = weather.forecast.forecastday[0].astro;
   const day = weather.forecast.forecastday[0].day;
-  // console.log(weather.forecast.forecastday[0].day);
+  // console.log(weather.location.localtime_epoch);
   return (
     <>
       <main className="flex flex-col items-center justify-center w-fit min-h-fit text-white ">
         {/* <Navbar /> */}
-        {/* <h1>current väder</h1> */}
 
         <div className="inline mb-5">
           <button
@@ -151,7 +148,7 @@ function App() {
           </button>{" "}
           <button
             className="p-2 rounded-2xl hover:bg-white hover:text-black bg-black"
-            onClick={() => setWindspeed(windSpeed === "km/h" ? "mp/h" : "km/h")}
+            onClick={() => setWindSpeed(windSpeed === "km/h" ? "mp/h" : "km/h")}
           >
             Switch to {windSpeed === "km/h" ? "mp/h" : "km/h"}
           </button>
@@ -180,14 +177,8 @@ function App() {
               fill="cyan"
               viewBox="0 0 16 16"
             >
-              <path
-                fill-rule="evenodd"
-                d="M7.21.8C7.69.295 8 0 8 0c.109.363.234.708.371 1.038.812 1.946 2.073 3.35 3.197 4.6C12.878 7.096 14 8.345 14 10a6 6 0 0 1-12 0C2 6.668 5.58 2.517 7.21.8zm.413 1.021A31.25 31.25 0 0 0 5.794 3.99c-.726.95-1.436 2.008-1.96 3.07C3.304 8.133 3 9.138 3 10c0 0 2.5 1.5 5 .5s5-.5 5-.5c0-1.201-.796-2.157-2.181-3.7l-.03-.032C9.75 5.11 8.5 3.72 7.623 1.82z"
-              />
-              <path
-                fill-rule="evenodd"
-                d="M4.553 7.776c.82-1.641 1.717-2.753 2.093-3.13l.708.708c-.29.29-1.128 1.311-1.907 2.87l-.894-.448z"
-              />
+              <path d="M7.21.8C7.69.295 8 0 8 0c.109.363.234.708.371 1.038.812 1.946 2.073 3.35 3.197 4.6C12.878 7.096 14 8.345 14 10a6 6 0 0 1-12 0C2 6.668 5.58 2.517 7.21.8zm.413 1.021A31.25 31.25 0 0 0 5.794 3.99c-.726.95-1.436 2.008-1.96 3.07C3.304 8.133 3 9.138 3 10c0 0 2.5 1.5 5 .5s5-.5 5-.5c0-1.201-.796-2.157-2.181-3.7l-.03-.032C9.75 5.11 8.5 3.72 7.623 1.82z" />
+              <path d="M4.553 7.776c.82-1.641 1.717-2.753 2.093-3.13l.708.708c-.29.29-1.128 1.311-1.907 2.87l-.894-.448z" />
             </svg>
             <p className="text-2xl font-bold flex capitalize"> humidity: </p>
             {current.humidity}%
@@ -199,7 +190,6 @@ function App() {
               width="16"
               height="16"
               fill="currentColor"
-              class="bi bi-wind"
               viewBox="0 0 16 16"
             >
               <path d="M12.5 2A2.5 2.5 0 0 0 10 4.5a.5.5 0 0 1-1 0A3.5 3.5 0 1 1 12.5 8H.5a.5.5 0 0 1 0-1h12a2.5 2.5 0 0 0 0-5zm-7 1a1 1 0 0 0-1 1 .5.5 0 0 1-1 0 2 2 0 1 1 2 2h-5a.5.5 0 0 1 0-1h5a1 1 0 0 0 0-2zM0 9.5A.5.5 0 0 1 .5 9h10.042a3 3 0 1 1-3 3 .5.5 0 0 1 1 0 2 2 0 1 0 2-2H.5a.5.5 0 0 1-.5-.5z" />
