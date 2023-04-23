@@ -282,7 +282,7 @@ function App() {
           <div className="hidden md:block mt-5">
             {" "}
             <canvas
-              className="bg-white rounded-xl ring-8 ring-white ring-opacity-40"
+              className="bg-white w-screen rounded-xl ring-8 ring-white ring-opacity-40"
               id="myChart"
             ></canvas>
           </div>
@@ -295,7 +295,7 @@ function App() {
         <br />
 
         <div className=" my-2 rounded-xl ring-8 ring-white ring-opacity-40 p-10">
-          <p className="text-2xl font-semibold">3-Day Forecast</p>
+          <p className="text-2bxl font-semibold">3-Day Forecast</p>
           {forecast.map((day) => (
             <WeatherCard
               key={day.date}
