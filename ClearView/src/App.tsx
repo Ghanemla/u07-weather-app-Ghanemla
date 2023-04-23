@@ -133,12 +133,18 @@ function App() {
   const forecast = weather.forecast.forecastday;
   const astro = weather.forecast.forecastday[0].astro;
   const day = weather.forecast.forecastday[0].day;
-  // console.log(weather.location.localtime_epoch);
+  // console.log(weather.forecast.forecastday);
   return (
     <>
-      <main className="flex flex-col items-center justify-center w-fit min-h-fit text-white ">
+      <main className="flex flex-col justify-center w-fit min-h-fit text-white ">
         {/* <Navbar /> */}
-
+        {/* <div className="date">
+          {new Date().toLocaleDateString("sv", {
+            weekday: "short",
+            month: "long",
+            day: "numeric",
+          })}
+        </div> */}
         <div className="inline mb-5">
           <button
             className="p-2 rounded-2xl hover:bg-white hover:text-black bg-black"
@@ -161,11 +167,12 @@ function App() {
           <hr />
           <div className="flex justify-center items-center text-6xl font-semibold mt-1 text-white underline">
             <img src={current.condition.icon} alt={current.condition.text} />
-            {current.condition.text}
+            <div className="">{current.condition.text}</div>
           </div>
           <div className="text-6xl  items-center justify-between font-bold flex mt-2">
             {unit === "°C" ? current.temp_c : current.temp_f}
-            {unit} <p className="text-xl  underline ">{day.condition.text}</p>
+            {unit}{" "}
+            <p className="text-xl  underline ml-6">{day.condition.text}</p>
           </div>
 
           <hr />
@@ -271,10 +278,11 @@ function App() {
             <p className="text-2xl font-bold flex capitalize"> moonPhase: </p>
             {astro.moon_phase}
           </div>
-          <div className="hidden md:block">
+          <hr />
+          <div className="hidden md:block mt-5">
             {" "}
             <canvas
-              className="  mt-3 bg-white  rounded-xl ring-8 ring-white ring-opacity-40"
+              className="bg-white rounded-xl ring-8 ring-white ring-opacity-40"
               id="myChart"
             ></canvas>
           </div>
@@ -285,8 +293,9 @@ function App() {
             </div> */}
         </div>
         <br />
-        <h2>3-day forecast</h2>
-        <div className="flex justify-center items-center gap-7 mt-3">
+
+        <div className=" my-2 rounded-xl ring-8 ring-white ring-opacity-40 p-10">
+          <p className="text-2xl font-semibold">3-Day Forecast</p>
           {forecast.map((day) => (
             <WeatherCard
               key={day.date}
