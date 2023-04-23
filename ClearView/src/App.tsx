@@ -282,7 +282,7 @@ function App() {
           <div className="hidden md:block mt-5">
             {" "}
             <canvas
-              className="bg-white w-screen rounded-xl ring-8 ring-white ring-opacity-40"
+              className="bg-white  w-max rounded-xl ring-8 ring-white ring-opacity-40"
               id="myChart"
             ></canvas>
           </div>
@@ -292,6 +292,7 @@ function App() {
               <button onClick={() => setUnit("°F")}>°F</button>
             </div> */}
         </div>
+
         <br />
 
         <div className=" my-2 rounded-xl ring-8 ring-white ring-opacity-40 p-10">
