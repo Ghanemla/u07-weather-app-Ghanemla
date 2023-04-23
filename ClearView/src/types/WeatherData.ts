@@ -23,6 +23,7 @@ export interface WeatherData {
     sunrise: string;
     sunset: string;
   };
+
   forecast: {
     forecastday: {
       date: string;
@@ -39,6 +40,17 @@ export interface WeatherData {
         avghumidity: number;
         maxwind_kph: number;
         maxwind_mph: number;
+      };
+      uv: {
+        uv: number;
+      };
+      astro: {
+        sunrise: string;
+        sunset: string;
+        moonrise: string;
+        moonset: string;
+        moon_phase: string;
+        moon_illumination: number;
       };
     }[];
   };
