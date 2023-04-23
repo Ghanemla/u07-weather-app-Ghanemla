@@ -3,9 +3,9 @@ import SearchBar from "./searchbar";
 
 const Navbar = () => {
   return (
-    <nav className="bg-gray-800 px-8 py-4 flex justify-between">
-      <img src={clearView} alt="Logo" className="logo logo-spin" />
-      <SearchBar />
+    <nav className="bg-gray-700 px-8 py-4 flex justify-between rounded">
+      <img src={clearView} alt="Logo" className="h-16" />
+      {/* <SearchBar /> */}
     </nav>
   );
 };
