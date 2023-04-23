@@ -11,10 +11,12 @@ function WeatherCard({ data, unit, windSpeed }: Props) {
 
   return (
     <div className="">
+      <hr />
       {/* <div className="date">{date.toLocaleDateString()}</div> */}
-      <div className="flex justify-between font-bold m-2 underline">
+      <div className="flex justify-center font-bold m-2 underline">
         {data.date}
       </div>
+      <hr />
       <div className="  flex justify-center  text-lg font-semibold m-3 text-white underline">
         {data.day.condition.text}
       </div>

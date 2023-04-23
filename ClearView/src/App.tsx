@@ -136,7 +136,7 @@ function App() {
   // console.log(weather.forecast.forecastday);
   return (
     <>
-      <main className="flex flex-col justify-center w-fit min-h-fit text-white ">
+      <main className="flex flex-col justify-center w-fit min-h-screen text-white ">
         {/* <Navbar /> */}
         {/* <div className="date">
           {new Date().toLocaleDateString("sv", {
@@ -145,7 +145,7 @@ function App() {
             day: "numeric",
           })}
         </div> */}
-        <div className="inline mb-5">
+        <div className="inline mb-5 w-s">
           <button
             className="p-2 rounded-2xl hover:bg-white hover:text-black bg-black"
             onClick={() => setUnit(unit === "°C" ? "°F" : "°C")}
@@ -165,7 +165,7 @@ function App() {
             {weather.location.name}
           </div>
           <hr />
-          <div className="flex justify-center items-center text-6xl font-semibold mt-1 text-white underline">
+          <div className="flex justify-center items-center text-3xl font-semibold mt-1 text-white underline">
             <img src={current.condition.icon} alt={current.condition.text} />
             <div className="">{current.condition.text}</div>
           </div>
@@ -282,7 +282,7 @@ function App() {
           <div className="hidden md:block mt-5">
             {" "}
             <canvas
-              className="bg-white  w-max rounded-xl ring-8 ring-white ring-opacity-40"
+              className="bg-white rounded-xl ring-8 ring-white ring-opacity-40"
               id="myChart"
             ></canvas>
           </div>
@@ -296,7 +296,7 @@ function App() {
         <br />
 
         <div className=" my-2 rounded-xl ring-8 ring-white ring-opacity-40 p-10">
-          <p className="text-2bxl font-semibold">3-Day Forecast</p>
+          <p className="text-2xl font-semibold">3-Day Forecast</p>
           {forecast.map((day) => (
             <WeatherCard
               key={day.date}
