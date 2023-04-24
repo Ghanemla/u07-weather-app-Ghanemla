@@ -136,7 +136,7 @@ function App() {
   // console.log(weather.forecast.forecastday);
   return (
     <>
-      <main className="flex flex-col justify-center w-fit min-h-screen text-white ">
+      <main className="flex flex-col justify-center min-h-screen text-white ">
         {/* <Navbar /> */}
         {/* <div className="date">
           {new Date().toLocaleDateString("sv", {
@@ -145,7 +145,7 @@ function App() {
             day: "numeric",
           })}
         </div> */}
-        <div className="inline mb-5 w-s">
+        <div className="inline mb-5 w-s ">
           <button
             className="p-2 rounded-2xl hover:bg-white hover:text-black bg-black"
             onClick={() => setUnit(unit === "°C" ? "°F" : "°C")}
@@ -159,7 +159,7 @@ function App() {
             Switch to {windSpeed === "km/h" ? "mp/h" : "km/h"}
           </button>
         </div>
-        <div className="w-full max-w-screen-sm  p-10 rounded-xl ring-8 ring-white ring-opacity-40">
+        <div className="w-screen max-w-screen-sm  p-10 rounded-xl ring-8 ring-white ring-opacity-40">
           <p className="text-2xl font-semibold">Current Weather in:</p>
           <div className=" text-6xl font-semibold mt-1 text-white">
             {weather.location.name}
@@ -295,7 +295,7 @@ function App() {
 
         <br />
 
-        <div className=" my-2 rounded-xl ring-8 ring-white ring-opacity-40 p-10">
+        <div className=" w-f my-2 rounded-xl ring-8 ring-white ring-opacity-40 p-10">
           <p className="text-2xl font-semibold">3-Day Forecast</p>
           {forecast.map((day) => (
             <WeatherCard
