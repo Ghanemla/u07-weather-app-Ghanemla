@@ -1,5 +1,5 @@
 import clearView from "../../assets/clearView.png";
-import SearchBar from "./searchbar";
+// import SearchBar from "./searchbar";
 
 const Navbar = () => {
   return (

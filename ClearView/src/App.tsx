@@ -37,8 +37,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!coords) return;
     async function fetchData() {
+      if (!coords) return;
       const WeatherData = await fetchHourlyWeather(
         coords.latitude,
         coords.longitude
