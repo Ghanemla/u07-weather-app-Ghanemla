@@ -32,6 +32,9 @@ export interface WeatherData {
         maxtemp_f: number;
         mintemp_c: number;
         mintemp_f: number;
+        totalprecip_in: number;
+        totalprecip_mm: number;
+        daily_will_it_rain: number;
         condition: {
           text: string;
           icon: string;
@@ -41,9 +44,7 @@ export interface WeatherData {
         maxwind_kph: number;
         maxwind_mph: number;
       };
-      uv: {
-        uv: number;
-      };
+      uv: number;
       astro: {
         sunrise: string;
         sunset: string;
@@ -52,6 +53,9 @@ export interface WeatherData {
         moon_phase: string;
         moon_illumination: number;
       };
+      hour: {
+        time_epoch: number;
+      }[];
     }[];
   };
 }
