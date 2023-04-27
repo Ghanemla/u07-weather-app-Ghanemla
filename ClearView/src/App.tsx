@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import type { WeatherData } from "./types/WeatherData";
 import WeatherCard from "./components/WeatherCard";
-// import { Chart } from "chart.js";
 import Chart from "chart.js/auto";
-// import temp from "./assets/images/temp.svg";
-import "./App.css";
 // import Navbar from "./components/navbar/navbar";
+import "./App.css";
 
 function App() {
   const [location, setLocation] = useState<GeolocationPosition | null>(null);
@@ -13,6 +11,7 @@ function App() {
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [unit, setUnit] = useState<"°C" | "°F">("°C");
   const [windSpeed, setWindSpeed] = useState<"km/h" | "mp/h">("km/h");
+  const [precip, setPrecip] = useState<"mm" | "in">("mm");
 
   const API_KEY = import.meta.env.VITE_REACT_APP_API_KEY;
   useEffect(() => {
@@ -26,6 +25,7 @@ function App() {
     }
   }, [API_KEY, location]);
 
+  // console.log(location);
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -90,18 +90,19 @@ function App() {
     if (chart) {
       chart.destroy();
     }
-
+    Chart.defaults.color = "white";
     // Create a new chart
     new Chart(canvas, {
       type: "line",
       data: {
         labels,
+
         datasets: [
           {
             label: `Temperature (${unit})`,
             data,
             fill: false,
-            borderColor: "#007bff",
+            borderColor: "#a3322a",
             tension: 0.1,
           },
         ],
@@ -126,7 +127,7 @@ function App() {
   }
 
   if (!location || !weather) {
-    return <div>Loading...</div>;
+    return <div className="text-white">Loading...</div>;
   }
 
   const current = weather.current;
@@ -145,21 +146,30 @@ function App() {
             day: "numeric",
           })}
         </div> */}
-        <div className="inline mb-5 w-s ">
-          <button
-            className="p-2 rounded-2xl hover:bg-white hover:text-black bg-black"
-            onClick={() => setUnit(unit === "°C" ? "°F" : "°C")}
-          >
-            Switch to {unit === "°C" ? "°F" : "°C"}
-          </button>{" "}
-          <button
-            className="p-2 rounded-2xl hover:bg-white hover:text-black bg-black"
-            onClick={() => setWindSpeed(windSpeed === "km/h" ? "mp/h" : "km/h")}
-          >
-            Switch to {windSpeed === "km/h" ? "mp/h" : "km/h"}
-          </button>
-        </div>
+
         <div className="w-screen max-w-screen-sm  p-10 rounded-xl ring-8 ring-white ring-opacity-40">
+          <div className="inline mb-5 w-s ">
+            <button
+              className="p-2 rounded-2xl hover:bg-white hover:text-black bg-black mr-2"
+              onClick={() => setUnit(unit === "°C" ? "°F" : "°C")}
+            >
+              Switch to {unit === "°C" ? "°F" : "°C"}
+            </button>{" "}
+            <button
+              className="p-2 rounded-2xl hover:bg-white hover:text-black bg-black mr-2zzzZZ"
+              onClick={() =>
+                setWindSpeed(windSpeed === "km/h" ? "mp/h" : "km/h")
+              }
+            >
+              Switch to {windSpeed === "km/h" ? "mp/h" : "km/h"}
+            </button>
+            <button
+              className="p-2 rounded-2xl hover:bg-white hover:text-black bg-black"
+              onClick={() => setPrecip(precip === "mm" ? "in" : "mm")}
+            >
+              Switch to {precip === "mm" ? "in" : "mm"}
+            </button>
+          </div>
           <p className="text-2xl font-semibold">Current Weather in:</p>
           <div className=" text-6xl font-semibold mt-1 text-white">
             {weather.location.name}
@@ -194,8 +204,8 @@ function App() {
           <div className="flex justify-between items-end my-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="20"
+              height="20"
               fill="currentColor"
               viewBox="0 0 16 16"
             >
@@ -282,20 +292,37 @@ function App() {
           <div className="hidden md:block mt-5">
             {" "}
             <canvas
-              className="bg-white rounded-xl ring-8 ring-white ring-opacity-40"
+              className="bg-slate-900  rounded-xl ring-8 ring-white ring-opacity-40"
               id="myChart"
             ></canvas>
           </div>
-          <div>{/* <img src={temp} alt="" srcset="" /> */}</div>
-          {/* <div className="unit-switcher">
-              <button onClick={() => setUnit("°C")}>°C</button>
-              <button onClick={() => setUnit("°F")}>°F</button>
-            </div> */}
         </div>
 
         <br />
 
         <div className=" w-f my-2 rounded-xl ring-8 ring-white ring-opacity-40 p-10">
+          <div className="inline mb-5 w-s ">
+            <button
+              className="p-2 rounded-2xl hover:bg-white hover:text-black bg-black"
+              onClick={() => setUnit(unit === "°C" ? "°F" : "°C")}
+            >
+              Switch to {unit === "°C" ? "°F" : "°C"}
+            </button>{" "}
+            <button
+              className="p-2 rounded-2xl hover:bg-white hover:text-black bg-black"
+              onClick={() =>
+                setWindSpeed(windSpeed === "km/h" ? "mp/h" : "km/h")
+              }
+            >
+              Switch to {windSpeed === "km/h" ? "mp/h" : "km/h"}
+            </button>
+            <button
+              className="p-2 rounded-2xl hover:bg-white hover:text-black bg-black"
+              onClick={() => setPrecip(precip === "mm" ? "in" : "mm")}
+            >
+              Switch to {precip === "mm" ? "in" : "mm"}
+            </button>
+          </div>
           <p className="text-2xl font-semibold">3-Day Forecast</p>
           {forecast.map((day) => (
             <WeatherCard
@@ -303,6 +330,7 @@ function App() {
               data={day}
               unit={unit}
               windSpeed={windSpeed}
+              precip={precip}
             />
           ))}
         </div>
