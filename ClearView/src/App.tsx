@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import type { WeatherData } from "./types/WeatherData";
+import type { WeatherData, HourlyData } from "./types/WeatherData";
 import WeatherCard from "./components/WeatherCard";
 import Chart from "chart.js/auto";
-// import Navbar from "./components/navbar/navbar";
 import "./App.css";
 
 function App() {
@@ -13,11 +12,12 @@ function App() {
   const [windSpeed, setWindSpeed] = useState<"km/h" | "mp/h">("km/h");
   const [precip, setPrecip] = useState<"mm" | "in">("mm");
 
+  const baseURL = "https://api.weatherapi.com/v1/forecast.json?";
   const API_KEY = import.meta.env.VITE_REACT_APP_API_KEY;
   useEffect(() => {
     if (location) {
       fetch(
-        `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${location.coords.latitude},${location.coords.longitude}&days=3`
+        `${baseURL}key=${API_KEY}&q=${location.coords.latitude},${location.coords.longitude}&days=3`
       )
         .then((res) => res.json())
         .then((data) => setWeather(data))
@@ -48,49 +48,40 @@ function App() {
     fetchData();
     async function fetchHourlyWeather(lat: number, lon: number) {
       const response = await fetch(
-        `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${lat},${lon}&days=1`
+        `${baseURL}key=${API_KEY}&q=${lat},${lon}&days=1`
       );
       const data = await response.json();
+
       const WeatherData = data.forecast.forecastday[0].hour.map(
-        (hour: any) => ({
+        (hour: HourlyData) => ({
           time: hour.time_epoch,
           temperature: hour.temp_c,
           humidity: hour.humidity,
         })
       );
-      // const WeatherData = {
-      //   temperature: data.current.temp_c,
-      //   humidity: data.current.humidity,
-      //   time: data.current.last_updated_epoch,
-      // };
-      // console.log(WeatherData);
 
       return WeatherData;
     }
   }, [API_KEY, coords, unit]);
-  function updateChart(WeatherData: Array<any>, unit: string) {
+  function updateChart(WeatherData: Array<HourlyData>, unit: string) {
     const canvas = document.getElementById("myChart") as HTMLCanvasElement;
-    const labels = WeatherData.map((hour: { time: number }) => {
+    const labels = WeatherData.map((hour: HourlyData) => {
       const date = new Date(hour.time * 1000);
       return date.getHours().toString().padStart(2, "0") + ":00";
     });
-    // const labels = [
-    //   new Date(WeatherData.time * 1000).getHours().toString().padStart(2, "0") +
-    //     ":00",
-    // ];
+
     const data =
       unit === "°C"
         ? WeatherData.map((hour) => hour.temperature)
         : WeatherData.map((hour) => (hour.temperature * 9) / 5 + 32); // transform to Fahrenheit
 
-    // Check if a chart has already been created for the canvas
     const chart = Chart.getChart(canvas);
 
-    // If a chart exists, destroy it before creating a new one
     if (chart) {
       chart.destroy();
     }
     Chart.defaults.color = "white";
+
     // Create a new chart
     new Chart(canvas, {
       type: "line",
@@ -134,19 +125,9 @@ function App() {
   const forecast = weather.forecast.forecastday;
   const astro = weather.forecast.forecastday[0].astro;
   const day = weather.forecast.forecastday[0].day;
-  // console.log(weather.forecast.forecastday);
   return (
     <>
       <main className="flex flex-col justify-center min-h-screen text-white ">
-        {/* <Navbar /> */}
-        {/* <div className="date">
-          {new Date().toLocaleDateString("sv", {
-            weekday: "short",
-            month: "long",
-            day: "numeric",
-          })}
-        </div> */}
-
         <div className="w-screen max-w-screen-sm  p-10 rounded-xl ring-8 ring-white ring-opacity-40">
           <div className="inline mb-5 w-s ">
             <button

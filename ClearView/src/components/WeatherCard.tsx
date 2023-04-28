@@ -8,9 +8,6 @@ interface Props {
 }
 
 function WeatherCard({ data, unit, windSpeed, precip }: Props) {
-  // console.log(data);
-  // const date = new Date(data.date);
-
   return (
     <>
       <div className="  flex justify-center  text-lg font-semibold m-3 text-white  ">
@@ -33,7 +30,6 @@ function WeatherCard({ data, unit, windSpeed, precip }: Props) {
       </div>
       <hr />
 
-      {/* <div className="date">{date.toLocaleDateString()}</div> */}
       <hr />
 
       <div className="flex justify-between items-end my-2">
@@ -120,10 +116,6 @@ function WeatherCard({ data, unit, windSpeed, precip }: Props) {
         {data.day.avghumidity}%
       </div>
       <hr />
-      {/* <div className=" flex justify-between items-end m-5">
-        <p className="text-2xl font-bold flex capitalize"> Humidity: </p>
-        {data.day.avghumidity}%
-      </div> */}
     </>
   );
 }

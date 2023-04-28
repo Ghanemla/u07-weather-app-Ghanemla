@@ -55,7 +55,17 @@ export interface WeatherData {
       };
       hour: {
         time_epoch: number;
-      }[];
+        temp_c: number;
+        humidity: number;
+      };
     }[];
   };
+}
+
+export interface HourlyData {
+  time_epoch: number;
+  temp_c: number;
+  humidity: number;
+  time: number;
+  temperature: number;
 }
