@@ -137,18 +137,12 @@ function App() {
               Switch to {unit === "°C" ? "°F" : "°C"}
             </button>{" "}
             <button
-              className="p-2 rounded-2xl hover:bg-white hover:text-black bg-black mr-2zzzZZ"
+              className="p-2 rounded-2xl hover:bg-white hover:text-black bg-black "
               onClick={() =>
                 setWindSpeed(windSpeed === "km/h" ? "mp/h" : "km/h")
               }
             >
               Switch to {windSpeed === "km/h" ? "mp/h" : "km/h"}
-            </button>
-            <button
-              className="p-2 rounded-2xl hover:bg-white hover:text-black bg-black"
-              onClick={() => setPrecip(precip === "mm" ? "in" : "mm")}
-            >
-              Switch to {precip === "mm" ? "in" : "mm"}
             </button>
           </div>
           <p className="text-2xl font-semibold">Current Weather in:</p>
@@ -284,13 +278,13 @@ function App() {
         <div className=" w-f my-2 rounded-xl ring-8 ring-white ring-opacity-40 p-10">
           <div className="inline mb-5 w-s ">
             <button
-              className="p-2 rounded-2xl hover:bg-white hover:text-black bg-black"
+              className="p-2 rounded-2xl hover:bg-white hover:text-black bg-black mr-1"
               onClick={() => setUnit(unit === "°C" ? "°F" : "°C")}
             >
               Switch to {unit === "°C" ? "°F" : "°C"}
             </button>{" "}
             <button
-              className="p-2 rounded-2xl hover:bg-white hover:text-black bg-black"
+              className="p-2 rounded-2xl hover:bg-white hover:text-black bg-black mr-2"
               onClick={() =>
                 setWindSpeed(windSpeed === "km/h" ? "mp/h" : "km/h")
               }
